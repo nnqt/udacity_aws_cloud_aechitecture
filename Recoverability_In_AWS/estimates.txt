@@ -1,0 +1,38 @@
+Recovery Time Objective (RTO)
+Minimum RTO for a Single AZ Outage
+In the event of an Availability Zone (AZ) outage, the Recovery Time Objective (RTO) is the amount of time it takes to recover and restore service in another AZ within the same region. Since the infrastructure is designed to be Multi-AZ, resources such as EC2 instances and databases can failover to the remaining AZs automatically. Assuming the outage occurs at 00:00:
+
+00:00 - Outage occurs in AZ1.
+00:01 - The monitoring system detects the outage, and an alert is triggered (1 minute).
+00:03 - The failover process begins, with resources automatically switching to AZ2 (3 minutes).
+00:10 - The system completes the failover, and services are restored in the healthy AZ (10 minutes).
+The minimum RTO for a single AZ outage would be approximately 10 minutes, depending on the speed of detection, failover initiation, and resource availability in the remaining AZ.
+
+Minimum RTO for a Single Region Outage
+If an entire region experiences an outage, the RTO depends on the ability to failover to another region, such as from us-east-1 to us-west-2. Since the deployment is Multi-Region, traffic can be rerouted, and resources can be spun up in the secondary region. Assuming the region outage occurs at 00:00:
+
+00:00 - Outage occurs in us-east-1.
+00:03 - The monitoring system detects the outage and triggers an alert (3 minutes).
+00:05 - Traffic is rerouted to the secondary region (us-west-2), and resources are scaled up as needed (5 minutes).
+00:20 - The new resources in the secondary region are operational, and services are fully restored (20 minutes).
+The minimum RTO for a single region outage would be approximately 20 minutes, depending on the speed of detection, traffic rerouting, and resource availability in the secondary region.
+
+Recovery Point Objective (RPO)
+Minimum RPO for a Single AZ Outage
+The Recovery Point Objective (RPO) refers to the maximum acceptable amount of data loss in the event of an outage. For a single AZ outage, with automatic backups and Multi-AZ replication enabled for the database, the data is continuously synchronized between AZs. Therefore, assuming a backup or snapshot is created every 5 minutes:
+
+00:00 - Outage occurs in AZ1.
+00:05 - The latest snapshot is taken (5 minutes).
+00:06 - The outage is detected, and failover begins (6 minutes).
+00:10 - The system restores the database from the latest snapshot and continues from the last known good state (10 minutes).
+The minimum RPO for a single AZ outage would be the time since the last backup, approximately 5 minutes, with minimal to no data loss due to the synchronous replication across AZs.
+
+Minimum RPO for a Single Region Outage
+In the event of a single region outage, the RPO is determined by the frequency of data replication to the secondary region. Assuming cross-region replication is set up with frequent updates:
+
+00:00 - Outage occurs in us-east-1.
+00:05 - The latest data replication to us-west-2 is completed (5 minutes).
+00:07 - The outage is detected, and failover to the secondary region begins (7 minutes).
+00:10 - The system in us-west-2 is restored, using the replicated data (10 minutes).
+The minimum RPO for a single region outage would be the time since the last cross-region data replication, typically around 5 minutes, ensuring minimal data loss.
+

@@ -1,0 +1,112 @@
+{16:33}~/Projects/Udacity/AWS_Cloud_Architect ➭ ls
+estimates.txt  log_primary.txt  nd063-c2-design-for-availability-resilience-reliability-replacement-project-starter-template  report  udacity-keypair.pem
+{16:33}~/Projects/Udacity/AWS_Cloud_Architect ➭ ssh -i ./udacity-replica-key-pair.pem ec2-user@ec2-34-209-212-81.us-west-2.compute.amazonaws.com                             
+The authenticity of host 'ec2-34-209-212-81.us-west-2.compute.amazonaws.com (34.209.212.81)' can't be established.
+ED25519 key fingerprint is SHA256:NdkErVSkDEg+wchX+O+E9LFBFDHunpH/Lw9RU/8ZbgQ.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ec2-34-209-212-81.us-west-2.compute.amazonaws.com' (ED25519) to the list of known hosts.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0664 for './udacity-replica-key-pair.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "./udacity-replica-key-pair.pem": bad permissions
+ec2-user@ec2-34-209-212-81.us-west-2.compute.amazonaws.com: Permission denied (publickey,gssapi-keyex,gssapi-with-mic).
+{16:34}~/Projects/Udacity/AWS_Cloud_Architect ➭ chmod 400 ./udacity-replica-key-pair.pem 
+{16:35}~/Projects/Udacity/AWS_Cloud_Architect ➭ ssh -i ./udacity-replica-key-pair.pem ec2-user@ec2-34-209-212-81.us-west-2.compute.amazonaws.com
+   ,     #_
+   ~\_  ####_        Amazon Linux 2
+  ~~  \_#####\
+  ~~     \###|       AL2 End of Life is 2025-06-30.
+  ~~       \#/ ___
+   ~~       V~' '->
+    ~~~         /    A newer version of Amazon Linux is available!
+      ~~._.   _/
+         _/ _/       Amazon Linux 2023, GA and supported until 2028-03-15.
+       _/m/'           https://aws.amazon.com/linux/amazon-linux-2023/
+
+[ec2-user@ip-10-2-11-71 ~]$ sudo yum update -y
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+No packages marked for update
+[ec2-user@ip-10-2-11-71 ~]$ sudo yum install -y mysql
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+amzn2-core                                                                                                                                                                                  | 3.6 kB  00:00:00     
+Resolving Dependencies
+--> Running transaction check
+---> Package mariadb.x86_64 1:5.5.68-1.amzn2.0.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+===================================================================================================================================================================================================================
+ Package                                        Arch                                          Version                                                      Repository                                         Size
+===================================================================================================================================================================================================================
+Installing:
+ mariadb                                        x86_64                                        1:5.5.68-1.amzn2.0.1                                         amzn2-core                                        8.8 M
+
+Transaction Summary
+===================================================================================================================================================================================================================
+Install  1 Package
+
+Total download size: 8.8 M
+Installed size: 49 M
+Downloading packages:
+mariadb-5.5.68-1.amzn2.0.1.x86_64.rpm                                                                                                                                                       | 8.8 MB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:mariadb-5.5.68-1.amzn2.0.1.x86_64                                                                                                                                                             1/1 
+  Verifying  : 1:mariadb-5.5.68-1.amzn2.0.1.x86_64                                                                                                                                                             1/1 
+
+Installed:
+  mariadb.x86_64 1:5.5.68-1.amzn2.0.1                                                                                                                                                                              
+
+Complete!
+[ec2-user@ip-10-2-11-71 ~]$ mysql --version
+mysql  Ver 15.1 Distrib 5.5.68-MariaDB, for Linux (x86_64) using readline 5.1
+[ec2-user@ip-10-2-11-71 ~]$ mysql -h udacity-readreplica.c4pai6rdrbkh.us-west-2.rds.amazonaws.com -u admin -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 189
+Server version: 8.0.35 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> SHOW DATABASE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DATABASE' at line 1
+MySQL [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| Udacity            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| udacity            |
++--------------------+
+6 rows in set (0.01 sec)
+
+MySQL [(none)]> USE Udacity;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [Udacity]> DESCRIBE test_table;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int          | NO   | PRI | NULL    | auto_increment |
+| data  | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+2 rows in set (0.03 sec)
+
+MySQL [Udacity]> INSERT INTO test_table (data) VALUES ('Sample Data 2');
+ERROR 1290 (HY000): The MySQL server is running with the --read-only option so it cannot execute this statement
+MySQL [Udacity]> 
+

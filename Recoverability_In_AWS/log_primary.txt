@@ -1,0 +1,109 @@
+{3:08}~/Projects/Udacity/AWS_Cloud_Architect ➭ ssh -i ./udacity-keypair.pem ec2-user@ec2-34-201-120-156.compute-1.amazonaws.com                                        
+The authenticity of host 'ec2-34-201-120-156.compute-1.amazonaws.com (34.201.120.156)' can't be established.
+ED25519 key fingerprint is SHA256:flZ4vtxHS7D5CjrbC9oqAKB4Qbu3ayYAnV+Cnt3RYiE.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ec2-34-201-120-156.compute-1.amazonaws.com' (ED25519) to the list of known hosts.
+   ,     #_
+   ~\_  ####_        Amazon Linux 2
+  ~~  \_#####\
+  ~~     \###|       AL2 End of Life is 2025-06-30.
+  ~~       \#/ ___
+   ~~       V~' '->
+    ~~~         /    A newer version of Amazon Linux is available!
+      ~~._.   _/
+         _/ _/       Amazon Linux 2023, GA and supported until 2028-03-15.
+       _/m/'           https://aws.amazon.com/linux/amazon-linux-2023/
+
+[ec2-user@ip-10-1-10-90 ~]$ sudo yum update -y
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+No packages marked for update
+[ec2-user@ip-10-1-10-90 ~]$ sudo yum install -y mysql
+Loaded plugins: extras_suggestions, langpacks, priorities, update-motd
+Resolving Dependencies
+--> Running transaction check
+---> Package mariadb.x86_64 1:5.5.68-1.amzn2.0.1 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+===================================================================================================================================================================================================================
+ Package                                        Arch                                          Version                                                      Repository                                         Size
+===================================================================================================================================================================================================================
+Installing:
+ mariadb                                        x86_64                                        1:5.5.68-1.amzn2.0.1                                         amzn2-core                                        8.8 M
+
+Transaction Summary
+===================================================================================================================================================================================================================
+Install  1 Package
+
+Total download size: 8.8 M
+Installed size: 49 M
+Downloading packages:
+mariadb-5.5.68-1.amzn2.0.1.x86_64.rpm                                                                                                                                                       | 8.8 MB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : 1:mariadb-5.5.68-1.amzn2.0.1.x86_64                                                                                                                                                             1/1 
+  Verifying  : 1:mariadb-5.5.68-1.amzn2.0.1.x86_64                                                                                                                                                             1/1 
+
+Installed:
+  mariadb.x86_64 1:5.5.68-1.amzn2.0.1                                                                                                                                                                              
+
+Complete!
+[ec2-user@ip-10-1-10-90 ~]$ mysql --servion
+mysql: unknown option '--servion'
+[ec2-user@ip-10-1-10-90 ~]$ mysql --version
+mysql  Ver 15.1 Distrib 5.5.68-MariaDB, for Linux (x86_64) using readline 5.1
+[ec2-user@ip-10-1-10-90 ~]$ nysql -h udacity.c6ofpeyha3j3.us-east-1.rds.amazonaws.com -u admin -p 
+-bash: nysql: command not found
+[ec2-user@ip-10-1-10-90 ~]$ mysql -h udacity.c6ofpeyha3j3.us-east-1.rds.amazonaws.com -u admin -p 
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'admin'@'10.1.10.90' (using password: YES)
+[ec2-user@ip-10-1-10-90 ~]$ mysql -h udacity.c6ofpeyha3j3.us-east-1.rds.amazonaws.com -u admin -p 
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 52
+Server version: 8.0.35 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> CREATE TABLE test_table (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     data VARCHAR(255) NOT NULL
+    -> );
+ERROR 1046 (3D000): No database selected
+MySQL [(none)]> USE Udacity
+ERROR 1049 (42000): Unknown database 'Udacity'
+MySQL [(none)]> CREATE DATABASE IF NOT EXSIT Udacity
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'EXSIT Udacity' at line 1
+MySQL [(none)]> CREATE DATABASE IF NOT EXISTS Udacity
+    -> ;
+Query OK, 1 row affected (0.02 sec)
+
+MySQL [(none)]> USE Udacity;
+Database changed
+MySQL [Udacity]> CREATE TABLE test_table (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     data VARCHAR(255) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+MySQL [Udacity]> INSERT INTO test_table (data) VALUES ('Sample Data');
+Query OK, 1 row affected (0.01 sec)
+
+MySQL [Udacity]> SELECT * FROM test_table;
++----+-------------+
+| id | data        |
++----+-------------+
+|  1 | Sample Data |
++----+-------------+
+1 row in set (0.01 sec)
+
+MySQL [Udacity]> Ctrl-C -- exit!
+Aborted
+[ec2-user@ip-10-1-10-90 ~]$ 

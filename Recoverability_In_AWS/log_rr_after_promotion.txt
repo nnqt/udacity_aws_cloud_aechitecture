@@ -1,0 +1,41 @@
+{16:51}~/Projects/Udacity/AWS_Cloud_Architect ➭ ssh -i ./udacity-replica-key-pair.pem ec2-user@ec2-34-209-212-81.us-west-2.compute.amazonaws.com
+Last login: Sat Aug 31 09:35:28 2024 from 14.161.7.136
+   ,     #_
+   ~\_  ####_        Amazon Linux 2
+  ~~  \_#####\
+  ~~     \###|       AL2 End of Life is 2025-06-30.
+  ~~       \#/ ___
+   ~~       V~' '->
+    ~~~         /    A newer version of Amazon Linux is available!
+      ~~._.   _/
+         _/ _/       Amazon Linux 2023, GA and supported until 2028-03-15.
+       _/m/'           https://aws.amazon.com/linux/amazon-linux-2023/
+
+[ec2-user@ip-10-2-11-71 ~]$ mysql -h udacity-readreplica.c4pai6rdrbkh.us-west-2.rds.amazonaws.com -u admin -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.35 Source distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MySQL [(none)]> USE Udacity;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MySQL [Udacity]> INSERT INTO test_table (data) VALUES ('Sample Data 2');
+Query OK, 1 row affected (0.00 sec)
+
+MySQL [Udacity]> SELECT * FROM test_table;
++----+---------------+
+| id | data          |
++----+---------------+
+|  1 | Sample Data   |
+|  2 | Sample Data 2 |
++----+---------------+
+2 rows in set (0.00 sec)
+
+MySQL [Udacity]> 
