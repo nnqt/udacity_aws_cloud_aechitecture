@@ -1,0 +1,33 @@
+﻿Estimate summary
+Upfront cost,Monthly cost,Total 12 months cost,Currency
+0,3713.769999999999,44565.24,USD
+,,* Includes upfront cost
+
+
+Detailed Estimate
+Group hierarchy,Region,Description,Service,Upfront,Monthly,First 12 months total,Currency,Status,Configuration summary
+My Estimate,US East (N. Virginia),Web Server,Amazon EC2 ,0,85.212,1022.54,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 2), Advance EC2 instance (t3.large), Pricing strategy (EC2 Instance Savings Plans 1yr  No Upfront), Enable monitoring (enabled), EBS Storage amount (30 GB), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+My Estimate,US East (N. Virginia),Application Server,Amazon EC2 ,0,96.6,1159.20,USD,,"Tenancy (Shared Instances), Operating system (Linux), Workload (Consistent, Number of instances: 2), Advance EC2 instance (m5.large), Pricing strategy (EC2 Instance Savings Plans 1yr  No Upfront), Enable monitoring (enabled), EBS Storage amount (30 GB), DT Inbound: Not selected (0 TB per month), DT Outbound: Not selected (0 TB per month), DT Intra-Region: (0 TB per month)"
+My Estimate,US East (N. Virginia),Master Database,Amazon RDS for PostgreSQL,0,116.62,1399.44,USD,,"Storage amount (100 GB), Storage volume (General Purpose SSD (gp2)), Nodes (1), Instance Type (db.m5.large), Utilization (On-Demand only) (100 %Utilized/Month), Deployment Option (Single-AZ), Pricing Model (Reserved), Lease Offering Term (1yr), Purchase Option (No Upfront)"
+My Estimate,US East (N. Virginia),Read Replica Database,Amazon RDS for PostgreSQL,0,116.62,1399.44,USD,,"Storage amount (100 GB), Storage volume (General Purpose SSD (gp2)), Nodes (1), Instance Type (db.m5.large), Utilization (On-Demand only) (100 %Utilized/Month), Deployment Option (Single-AZ), Pricing Model (Reserved), Lease Offering Term (1yr), Purchase Option (No Upfront)"
+My Estimate,US East (N. Virginia),Amazon Route 53,Amazon Route 53,0,371.5,4458.00,USD,,"Hosted Zones (1), Basic Checks Within AWS (4), Number of Elastic Network Interfaces (4)"
+My Estimate,US East (N. Virginia),S3 Bucket,S3 Standard,0,119.56,1434.72,USD,,"S3 Standard storage (5 TB per month), PUT, COPY, POST, LIST requests to S3 Standard (200000), GET, SELECT, and all other requests from S3 Standard (2000000)"
+My Estimate,US East (N. Virginia),CloudFront,Amazon CloudFront,0,920.4,11044.80,USD,,"Data transfer out to internet (10 TB per month), Number of requests (HTTPS) (50 million per month)"
+My Estimate,US East (N. Virginia),VPC,VPN Connection,0,667,8004.00,USD,,"Working days per month (30), Number of subnet associations (4)"
+My Estimate,US East (N. Virginia),VPC,Network Address Translation (NAT) Gateway,0,83.7,1004.40,USD,,Number of NAT Gateways (2)
+My Estimate,US East (N. Virginia),CloudWatch,Amazon CloudWatch,0,81.7,980.40,USD,,"Number of Metrics (includes detailed and custom metrics) (20), Standard Logs: Data Ingested (100 GB), Number of Dashboards (), Number of composite alarms (50), Expected Logs Data scanned (50 GB)"
+My Estimate,US East (N. Virginia),Application Load Balancer,Application Load Balancer,0,162.43,1949.16,USD,,Number of Application Load Balancers (1)
+My Estimate,US East (N. Virginia),Application Load Balancer,Network Load Balancer,0,892.43,10709.16,USD,,"Number of Network Load Balancers (1), Processed bytes per NLB for TCP (50 GB per hour), Average number of new TCP connections ( per second), Processed bytes per NLB for TLS (50 GB per hour), Processed bytes per NLB for UDP (100 GB per hour)"
+
+
+
+Acknowledgement
+"* AWS Pricing Calculator provides only an estimate of your AWS fees and doesn't include any taxes that might apply. Your actual fees depend on a variety of factors, including your actual usage of AWS services."
+
+
+
+
+EC2 pricing strategy changed from on-demand to 1-year prepaid reserved instances for both web and application servers.
+RDS ricing strategy changed from on-demand to 1-year prepaid reserved instances
+Application Load Balancer - reduces number of processed GB per month (EC2 and IP)
+Network Load Balancer - reduces number of processed GB per month (NLB for TCP)

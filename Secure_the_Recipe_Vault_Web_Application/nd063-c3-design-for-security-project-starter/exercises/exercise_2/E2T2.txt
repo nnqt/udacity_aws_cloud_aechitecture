@@ -1,0 +1,15 @@
+Research and analyze which of the vulnerabilities appear to be related to the code that was deployed for the environment in this project.
+
+Bonus - provide recommendations on how to remediate the vulnerabilities.
+
+From AWS Config,
+- ALB HTTP to HTTPS Redirection: Lack of redirection from HTTP to HTTPS can expose data in transit
+- ALB HTTP Drop Invalid Header: Accepting invalid headers can lead to security vulnerabilities such as header injection attacks
+- EC2 No Public IP: EC2 instances with public IPs are more exposed to attacks from the internet
+
+From AWS SecurityHub,
+- Security groups should not allow ingress from 0.0.0.0/0 or ::/0 to port 22 
+- Security groups should not allow ingress from 0.0.0.0/0 or ::/0 to port 3389
+- VPC default security groups should not allow inbound or outbound traffic
+- VPC flow logging should be enabled in all VPCs
+- CloudTrail should be enabled and configured with at least one multi-Region trail that includes read and write management events

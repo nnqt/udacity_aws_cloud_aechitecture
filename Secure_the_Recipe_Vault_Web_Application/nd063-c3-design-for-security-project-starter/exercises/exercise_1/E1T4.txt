@@ -1,0 +1,8 @@
+Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
+
+# Poor practice 1
+Allowing inbound traffic from anywhere (0.0.0.0/0) for all protocols (IpProtocol: -1) in WebAppSG, AppLoadBalancerSG, and AttackInstanceSG. 
+This means any machine from anywhere can access EC2 instances and load balancer.
+
+# Poor practice 2
+Grant EC2 instances full access to all S3 resources.

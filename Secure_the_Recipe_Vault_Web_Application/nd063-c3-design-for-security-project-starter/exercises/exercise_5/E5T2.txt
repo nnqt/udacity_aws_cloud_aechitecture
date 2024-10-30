@@ -1,0 +1,27 @@
+# Identify tools that will allow you to do the following:
+
+## Scan infrastructure as code templates
+
+Terrascan (https://github.com/tenable/terrascan-action)
+
+### Example vulnerability
+
+Terrascan can check your infrastructure code (like Terraform) for security issues. 
+For example, it can find cases where an S3 bucket is not encrypted, which could expose sensitive data.
+
+##Scan AMI’s or containers for OS vulnerabilities
+
+Grype (https://github.com/anchore/grype)
+
+### Example vulnerability
+
+Grype scans container images or AMIs for security weaknesses in software. For instance, it can find outdated versions 
+of software that have known security flaws, such as an old version of Apache with vulnerabilities.
+
+##Scan an AWS environment for cloud configuration vulnerabilities
+
+AWS Config (https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html)
+
+### Example vulnerability
+
+AWS Config can help identify cloud configuration issues such as unrestricted security groups allowing SSH access from any IP address, violating security best practices.
